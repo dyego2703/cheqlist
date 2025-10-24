@@ -1,0 +1,498 @@
+openapi: 3.0.3
+info:
+  title: Cheqlist API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /auth/login:
+    post:
+      summary: Generate an access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Token generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+  /equipments:
+    get:
+      summary: List equipments
+      responses:
+        '200':
+          description: Equipment collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Equipment'
+    post:
+      summary: Create equipment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentInput'
+      responses:
+        '201':
+          description: Equipment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+  /equipments/{id}:
+    get:
+      summary: Retrieve equipment
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '200':
+          description: Equipment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+    put:
+      summary: Update equipment
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EquipmentInput'
+      responses:
+        '200':
+          description: Equipment updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Equipment'
+    delete:
+      summary: Remove equipment
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '204':
+          description: Equipment removed
+  /activities:
+    get:
+      summary: List activities
+      responses:
+        '200':
+          description: Activity collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+    post:
+      summary: Create activity
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityInput'
+      responses:
+        '201':
+          description: Activity created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+  /activities/{id}:
+    get:
+      summary: Retrieve activity
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '200':
+          description: Activity details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+    put:
+      summary: Update activity
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityInput'
+      responses:
+        '200':
+          description: Activity updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+    delete:
+      summary: Remove activity
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '204':
+          description: Activity removed
+  /instances:
+    get:
+      summary: List instances
+      responses:
+        '200':
+          description: Instance collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instance'
+    post:
+      summary: Create instance
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstanceInput'
+      responses:
+        '201':
+          description: Instance created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+  /instances/{id}:
+    get:
+      summary: Retrieve instance
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '200':
+          description: Instance details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+    put:
+      summary: Update instance
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstanceInput'
+      responses:
+        '200':
+          description: Instance updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instance'
+    delete:
+      summary: Remove instance
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '204':
+          description: Instance removed
+  /records:
+    get:
+      summary: List records
+      responses:
+        '200':
+          description: Record collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Record'
+    post:
+      summary: Create record
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordInput'
+      responses:
+        '201':
+          description: Record created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+  /records/{id}:
+    get:
+      summary: Retrieve record
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '200':
+          description: Record details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+    put:
+      summary: Update record
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordInput'
+      responses:
+        '200':
+          description: Record updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+    delete:
+      summary: Remove record
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ResourceId'
+      responses:
+        '204':
+          description: Record removed
+  /insights:
+    get:
+      summary: Retrieve aggregate insights
+      responses:
+        '200':
+          description: Insight summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Insights'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    ResourceId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    Equipment:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        status:
+          type: string
+          enum:
+            - available
+            - unavailable
+            - maintenance
+      required:
+        - id
+        - name
+        - category
+        - status
+    EquipmentInput:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        status:
+          type: string
+          enum:
+            - available
+            - unavailable
+            - maintenance
+      required:
+        - name
+        - category
+        - status
+    Activity:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        equipmentId:
+          type: string
+      required:
+        - id
+        - name
+        - description
+        - equipmentId
+    ActivityInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        equipmentId:
+          type: string
+      required:
+        - name
+        - description
+        - equipmentId
+    Instance:
+      type: object
+      properties:
+        id:
+          type: string
+        activityId:
+          type: string
+        scheduledFor:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - scheduled
+            - in_progress
+            - completed
+            - cancelled
+      required:
+        - id
+        - activityId
+        - scheduledFor
+        - status
+    InstanceInput:
+      type: object
+      properties:
+        activityId:
+          type: string
+        scheduledFor:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - scheduled
+            - in_progress
+            - completed
+            - cancelled
+      required:
+        - activityId
+        - scheduledFor
+        - status
+    Record:
+      type: object
+      properties:
+        id:
+          type: string
+        instanceId:
+          type: string
+        completedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        metrics:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - id
+        - instanceId
+        - completedAt
+    RecordInput:
+      type: object
+      properties:
+        instanceId:
+          type: string
+        completedAt:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        metrics:
+          type: object
+      required:
+        - instanceId
+        - completedAt
+    Insights:
+      type: object
+      properties:
+        totals:
+          type: object
+          properties:
+            equipments:
+              type: integer
+            activities:
+              type: integer
+            instances:
+              type: integer
+            records:
+              type: integer
+        instances:
+          type: object
+          properties:
+            completed:
+              type: integer
+            scheduled:
+              type: integer
